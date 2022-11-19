@@ -73,7 +73,10 @@ CMD [ "path/to/file/docker.handler" ]
 
 ````
 
-7. Try it with `serverless offline start --stage development` or the stage name you normally use
+7. Try it with `serverless offline start --stage development` or the stage name you normally use.
+
+** Important **
+Serverless-offline requires the command to be `serverless offline start` and not `serverless offline` alone, otherwise the `offline:start:init` and `offline:start:end` lifecycle hooks won't kick in.
 
 
 # How does it work?
