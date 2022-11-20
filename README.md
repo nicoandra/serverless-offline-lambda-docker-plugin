@@ -86,10 +86,19 @@ The plugin updates the function definitions by:
 2. Copying the value of the `handler` key as a `REAL_EVT_HANDLER` environment variable of the function, which is later on used by the handler.
 3. Removing the `handler` key from the function definition
 
+# To do:
+* Add tests
+* Include a NodeJs sample file
+* Add linter
+* Test with Serverless 3
+
+# Issues, bug reports and collaboration:
+* Issues can be created on the Issues section
+* Pull requests are accepted
 
 # Disclaimer:
 
 * This plugin won't build any docker image. Building the images and pushing them to an image repository should be done manually
+* This plugin wasn't tested with Serverless v3 as I'm using v2.
 
 
-  
