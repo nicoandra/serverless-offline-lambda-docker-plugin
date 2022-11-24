@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com-perso:nicoandra/serverless-offline-lambda-docker-plugin.git"
+    "url": "git@github.com:nicoandra/serverless-offline-lambda-docker-plugin.git"
   },
   "keywords": [
     "serverless",
