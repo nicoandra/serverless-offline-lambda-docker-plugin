@@ -1,0 +1,25 @@
+{
+  "name": "serverless-offline-lambda-docker-plugin",
+  "version": "1.0.1",
+  "description": "Use Docker images in AWS, but function handlers for Local development with Serverless Offline.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-perso:nicoandra/serverless-offline-lambda-docker-plugin.git"
+  },
+  "keywords": [
+    "serverless",
+    "offline",
+    "lambda",
+    "docker",
+    "image"
+  ],
+  "author": "Nico Andrade",
+  "license": "ISC",
+  "peerDependencies": {
+    "serverless": "^2.60 || 3"
+  }
+}
