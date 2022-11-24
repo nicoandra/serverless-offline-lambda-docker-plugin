@@ -31,6 +31,7 @@ custom:
      disabled-functions:
       - some_function
       - another_function
+    enableTransitionSuffix: false
 ````
 
   * enabled: allows to disable the plugin altogether.
@@ -38,6 +39,7 @@ custom:
   * docker-image: define the image name. You can use `${env:SOME_VALUE}` in case you define the image to use through environment variables.
   * local-stages: list of stages for which the local-handler will be used.
   * disabled-functions: list of functions for which the plugin won't kick in. This let's you disable the plugin for specific functions if needed.
+  * enableTransitionSuffix: important setting for plugin state changes (either enabling it or disabling it, see documentation below for further information)
   
 4. Create a docker-handler file, that will route traffic to the actual files. Find a Python example below, and feel free to submit a NodeJs example if you get it done:
 
@@ -86,6 +88,23 @@ The plugin updates the function definitions by:
 2. Copying the value of the `handler` key as a `REAL_EVT_HANDLER` environment variable of the function, which is later on used by the handler.
 3. Removing the `handler` key from the function definition
 
+# First deployment after enabling or disabling the plugin
+The Lambda documentation specifies that an existing function can't change from a normal handler towards a Docker Image and vice versa. Updating the Lambda resource requires a deletion and a creation. 
+
+This means that, in order to start using the plugin (and in order to stop using it) you will need to change the names of all functions, in such a way that the _current_ function is deleted and the _new_ function is created, with a different name.
+
+This plugin offers an option to ease the transition towards _using the plugin_ by enabling and disabling the `enableTransitionSuffix` option.
+
+When the `enableTransitionSuffix` option is set to `true`, the plugin will add the `Dkr` suffix to the function key in Serverless. As a result, your _previous_ function won't exist in the stack and, therefore, it will be removed from CloudFormation.
+
+## Enabling the plugin
+
+When using the plugin for the first time, set `enableTransitionSuffix: true` in the plugin configuration and attempt a deployment. Once the deployment is successful you can set `enableTransitionSuffix: false` and deploy again.
+
+## Disabling the plugin
+When attempting to disable the plugin, set `enableTransitionSuffix: true`, keeping the plugin enabled, and attempt to deploy. Upon success, disable the plugin and deploy again. This will revert the function to use normal handlers and will also rename the functions back as they were originally.
+
+
 # To do:
 * Add tests
 * Include a NodeJs sample file
@@ -97,8 +116,8 @@ The plugin updates the function definitions by:
 * Pull requests are accepted
 
 # Disclaimer:
-
 * This plugin won't build any docker image. Building the images and pushing them to an image repository should be done manually
 * This plugin wasn't tested with Serverless v3 as I'm using v2.
+
 
 
