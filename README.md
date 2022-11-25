@@ -39,7 +39,7 @@ custom:
   * enableTransitionSuffix: important setting for plugin state changes (either enabling it or disabling it, see documentation below for further information)
   * localStages: list of stages the plugin will ignore.
   
-4. Create a docker-handler file, that will route traffic to the actual files. Find a Python example below, and feel free to submit a NodeJs example if you get it done:
+4. Create a docker-handler file, that will route traffic to the actual files. Find a Python example below, and look at the `samples` folder for more languages:
 
 docker.py
 ````
