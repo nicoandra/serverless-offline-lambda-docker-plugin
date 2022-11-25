@@ -22,41 +22,38 @@ plugins:
 custom:
   serverless-offline-lambda-docker-plugin:
     enabled: true
-    local-handler: path/to/local/file.handler
-    docker-image: your-docker-image:version
-    local-stages:
+    dockerImage: your-docker-image:version
+    localStages:
       - offline
       - dev
       - any_other_stage
-     disabled-functions:
+     functionsToSkip:
       - some_function
       - another_function
     enableTransitionSuffix: false
 ````
 
   * enabled: allows to disable the plugin altogether.
-  * local-handler: define the path of your function handler following the same serverless convention, ie (path to file).(handler function name).
-  * docker-image: define the image name. You can use `${env:SOME_VALUE}` in case you define the image to use through environment variables.
-  * local-stages: list of stages for which the local-handler will be used.
-  * disabled-functions: list of functions for which the plugin won't kick in. This let's you disable the plugin for specific functions if needed.
+  * dockerImage: define the image name. You can use `${env:SOME_VALUE}` in case you define the image to use through environment variables.
+  * functionsToSkip: list of functions for which the plugin won't kick in. This let's you disable the plugin for specific functions if needed.
   * enableTransitionSuffix: important setting for plugin state changes (either enabling it or disabling it, see documentation below for further information)
+  * localStages: list of stages the plugin will ignore.
   
 4. Create a docker-handler file, that will route traffic to the actual files. Find a Python example below, and feel free to submit a NodeJs example if you get it done:
-
 
 docker.py
 ````
 import importlib
 import os
 
-# Refer to https://github.com/nicoandra/serverless-offline-lambda-docker-plugin for further information
 
 def find_module():
     # For this to work you need to pass the actual
     # function handler as an environment variable
-    path = os.environ.get("REAL_EVT_HANDLER")
-    (module_name, function_name) = path.split(".")[0].replace("/", ".")
-    return (module_name, function_name)
+    # See https://www.npmjs.com/package/serverless-offline-lambda-docker-plugin for further information
+    handler_path = os.environ.get("REAL_EVT_HANDLER")
+    (module_name, function_name) = handler_path.split(".")
+    return (module_name.replace("/", "."), function_name)
 
 
 def handler(lambda_event, lambda_context):
@@ -64,6 +61,7 @@ def handler(lambda_event, lambda_context):
     loaded_module = importlib.import_module(module_name)
     event_handler = getattr(loaded_module, function_name)
     return event_handler(lambda_event, lambda_context)
+
 ````
 
 5. Define your serverless functions as you normally do, having a `handler` key pointing to the event handler.

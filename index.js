@@ -27,11 +27,10 @@ class ServerlessOfflineLambdaDockerPlugin {
                     enabled: {type: "boolean"},
                     enableTransitionSuffix: {type: "boolean"},
                     dockerImage: {type: "string"},
-                    localHandler: {type: "string"},
                     localStages: {type: "array", items: { type: "string"}},
                     functionsToSkip: {type: "array", items: { type: "string"}},
                 },
-                required: ['dockerImage', 'localHandler', 'localStages', 'enabled']
+                required: ['dockerImage', 'localStages', 'enabled']
             },
         },
     });
@@ -50,11 +49,6 @@ class ServerlessOfflineLambdaDockerPlugin {
 
     if (!this.config.dockerImage) {
         console.error(`${logPrefix}: plugin is enabled, but the dockerImage parameter is not set. Exiting.`);
-        exit(1);
-    }
-
-    if (!this.config.localHandler) {
-        console.error(`${logPrefix}: plugin is enabled, but no localHandler has been set. Exiting.`);
         exit(1);
     }
 
