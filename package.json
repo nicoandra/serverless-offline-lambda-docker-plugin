@@ -1,6 +1,6 @@
 {
   "name": "serverless-offline-lambda-docker-plugin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Use Docker images in AWS, but function handlers for Local development with Serverless Offline.",
   "main": "index.js",
   "scripts": {
